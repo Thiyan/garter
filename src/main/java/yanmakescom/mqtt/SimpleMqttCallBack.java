@@ -113,7 +113,7 @@ public class SimpleMqttCallBack implements MqttCallback {
         //client=new MqttClient("tcp://localhost:1883", "Thiyan");
         client = new MqttClient("tcp://mqtt.senzmate.com:1883", "miller");
         client.connect();
-        client.subscribe("test");
+        client.subscribe("SenzMate/D2S/Bmich-A");
 
         client.setCallback(this);
     }
