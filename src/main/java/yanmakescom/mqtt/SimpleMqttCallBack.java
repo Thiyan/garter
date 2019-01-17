@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import yanmakescom.code.Device;
 import yanmakescom.code.DeviceRepository;
+import yanmakescom.utils.ProductType;
 
 import javax.annotation.PostConstruct;
 import java.util.concurrent.TimeUnit;
@@ -35,10 +36,6 @@ public class SimpleMqttCallBack implements MqttCallback {
 
     public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
 
-
-        double CN=0,T=0,M=0,B=0;
-        String N;
-
         String message = new String(mqttMessage.getPayload()); //Pick the payload String
         System.out.println(message);
 
@@ -49,7 +46,13 @@ public class SimpleMqttCallBack implements MqttCallback {
             String[] record = dev.split("-"); //Split message to get device type
 //            System.out.println(record[0]);
 //            System.out.println(record[1]);
-              N=record[0];
+                Device d=new Device();
+
+              if(record[0].equals("0"))
+                    d.setProduct(ProductType.M);
+
+              else if(record[0].equals("1"))
+                  d.setProduct(ProductType.R);
 
             String[] rec=record[1].split(",");
 
@@ -60,33 +63,41 @@ public class SimpleMqttCallBack implements MqttCallback {
                 //System.out.println(data[0]);
 
                 switch (data[0]) {
+                    case "W":
+                        d.setName(data[1]);
+//                        T=data[1];
+//                        System.out.println(T);
+                        break;
                     case "T":
-//                        device.setTempareture(Double.parseDouble(data[1]));
-                        T=Double.parseDouble(data[1]);
+                        d.setTemperature(data[1]);
+//                        T=data[1];
 //                        System.out.println(T);
                         break;
                     case "M":
 
-//                        device.setHumidity(Double.parseDouble(data[1]));
-                        M=Double.parseDouble(data[1]);
+                        d.setHumidity(data[1]);
+//                        M=data[1];
 //                        System.out.println(H);
                         break;
                     case "CN":
 
-//                        device.setMoisture(Double.parseDouble(data[1]));
-                        CN=Double.parseDouble(data[1]);
+                        d.setMoisture(data[1]);
+//                        CN=data[1];
 //                        System.out.println(M);
                         break;
-                    case "B":
+                    case "H":
 
-//                        device.setIntensity(Double.parseDouble(data[1]));
-                        B=Double.parseDouble(data[1]);
+                        d.setHumidity(data[1]);
+//                        System.out.println(I);
+                        break;
+
+                        case "LI":
+                        d.setLuminance(data[1]);
 //                        System.out.println(I);
                         break;
                     default:
                 }
             }
-            Device d=new Device(N,T,CN,M,B);
             System.out.println(d.toString());
             try {
                 deviceRepository.save(d);
@@ -94,10 +105,7 @@ public class SimpleMqttCallBack implements MqttCallback {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
-
-
      }
 
 
@@ -111,7 +119,7 @@ public class SimpleMqttCallBack implements MqttCallback {
         System.out.println("== START SUBSCRIBER ==");
 
         //client=new MqttClient("tcp://localhost:1883", "Thiyan");
-        client = new MqttClient("tcp://mqtt.senzmate.com:1883", "miller");
+        client = new MqttClient("tcp://mqtt.senzmate.com:1883", "atno14");
         client.connect();
         client.subscribe("SenzMate/D2S/Bmich-A");
 

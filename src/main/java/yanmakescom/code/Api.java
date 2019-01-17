@@ -1,65 +1,48 @@
 package yanmakescom.code;
 
-import org.eclipse.paho.client.mqttv3.MqttException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import yanmakescom.exception.AGException;
 import yanmakescom.mqtt.Publish;
-
-import java.util.List;
-import java.util.Optional;
+import yanmakescom.utils.AGResponse;
 
 @RestController
+@CrossOrigin(origins = "*")
+@RequestMapping("/")
 public class Api {
     @Autowired
-    private DeviceRepository deviceRepository;
+    private DeviceService deviceService;
 
     @Autowired
     private Publish publish;
 
 
-    @GetMapping("/")
-    public String getDevice() {
-
-        return "Welcome to ======Sensor 1.0======";
-
-    }
-
-
-    @GetMapping("/device/{id}")
-    public Optional<Device> getDevice(@PathVariable String id) {
-        Optional<Device> d=null;
-        System.out.println(id);
-        try{
-            d=deviceRepository.findById(id);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return d;
-
-    }
-
     @GetMapping("/device")
-    public List<Device> getAllDevice() {
-        List<Device> d=null;
+    public AGResponse getDevice(@RequestParam("id") String id) throws AGException {
 
-        try{
-            d=deviceRepository.findAll();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return d;
+        return new AGResponse(deviceService.getDevice(id));
 
     }
 
-//    @GetMapping("/control/{msg}")
-//    public String control(@PathVariable String msg) {
-//        try {
-//            publish.publish(msg);
-//        } catch (MqttException ex) {
-//            return "error";
+//    @GetMapping("/device")
+//    public List<Device> getAllDevice() {
+//        List<Device> d=null;
+//
+//        try{
+//            d=deviceRepository.findAll();
+//        }catch (Exception e){
+//            e.printStackTrace();
 //        }
-//        return "Success";
+//        return d;
+//
 //    }
+
+    @PostMapping("/config")
+    public AGResponse control(@RequestParam("device") String id, @RequestParam("product") String product) throws AGException {
+
+
+        return new AGResponse(publish.publish(id,product));
+    }
 
 
 

@@ -2,30 +2,35 @@ package yanmakescom.code;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import yanmakescom.utils.ProductType;
 
 @Document(collection = "device")
 public class Device {
 
     @Id
     private String name;
-    private double tempareture;
-    private double moisture;
-    private double connectivity;
-    private double battery;
+    private String temperature;
+    private String moisture;
+    private String connectivity;
+    private String humidity;
+    private String luminance;
+    private ProductType product;
+    private boolean active;
 
-    public Device(){
-
+    public Device() {
     }
 
-    public Device(String N,double T,double CN,double M,double B){
-        name=N;
-        tempareture=T;
-        moisture=M;
-        connectivity=CN;
-        battery=B;
-
+    public Device(String name, String temperature, String moisture, String connectivity, String humidity,
+                  String luminance, ProductType product, boolean active) {
+        this.name = name;
+        this.temperature = temperature;
+        this.moisture = moisture;
+        this.connectivity = connectivity;
+        this.humidity = humidity;
+        this.luminance = luminance;
+        this.product = product;
+        this.active = active;
     }
-
 
     public String getName() {
         return name;
@@ -35,46 +40,73 @@ public class Device {
         this.name = name;
     }
 
-    public double getTempareture() {
-        return tempareture;
+    public String getTemperature() {
+        return temperature;
     }
 
-    public void setTempareture(double tempareture) {
-        this.tempareture = tempareture;
+    public void setTemperature(String temperature) {
+        this.temperature = temperature;
     }
 
-    public double getMoisture() {
+    public String getMoisture() {
         return moisture;
     }
 
-    public void setMoisture(double moisture) {
+    public void setMoisture(String moisture) {
         this.moisture = moisture;
     }
 
-    public double getConnectivity() {
+    public String getConnectivity() {
         return connectivity;
     }
 
-    public void setConnectivity(double connectivity) {
+    public void setConnectivity(String connectivity) {
         this.connectivity = connectivity;
     }
 
-    public double getBattery() {
-        return battery;
+    public String getHumidity() {
+        return humidity;
     }
 
-    public void setBattery(double battery) {
-        this.battery = battery;
+    public void setHumidity(String humidity) {
+        this.humidity = humidity;
+    }
+
+    public String getLuminance() {
+        return luminance;
+    }
+
+    public void setLuminance(String luminance) {
+        this.luminance = luminance;
+    }
+
+    public ProductType getProduct() {
+        return product;
+    }
+
+    public void setProduct(ProductType product) {
+        this.product = product;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override
     public String toString() {
         return "Device{" +
                 "name='" + name + '\'' +
-                ", tempareture=" + tempareture +
-                ", moisture=" + moisture +
-                ", connectivity=" + connectivity +
-                ", battery=" + battery +
+                ", temperature='" + temperature + '\'' +
+                ", moisture='" + moisture + '\'' +
+                ", connectivity='" + connectivity + '\'' +
+                ", humidity='" + humidity + '\'' +
+                ", luminance='" + luminance + '\'' +
+                ", product=" + product +
+                ", active=" + active +
                 '}';
     }
 }
