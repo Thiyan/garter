@@ -13,6 +13,9 @@ public class Publish  {
     public Boolean publish(String device, String product) throws AGException {
 
         String msg="P:"+product;
+
+        System.out.println(msg);
+        System.out.println(device);
         try {
             MqttClient client = new MqttClient("tcp://mqtt.senzmate.com:1883", "Donoor");
             client.connect();

@@ -23,6 +23,7 @@ public class DeviceService {
         if(device==null)
             throw new AGException(AGStatus.NO_ENTRY_FOUND);
 
+        System.out.println(device.toString());
         return device;
     }
 }
