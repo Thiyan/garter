@@ -1,12 +1,13 @@
 package yanmakescom.code;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import yanmakescom.utils.ProductType;
 
 @Document(collection = "device")
 public class Device {
 
-
+    @Id
     private String name;
     private String temperature;
     private String moisture;

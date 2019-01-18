@@ -12,18 +12,18 @@ public class Publish  {
 
     public Boolean publish(String device, String product) throws AGException {
 
-        String msg="P:"+product;
+//        String msg="P:"+product;
 
-        System.out.println(msg);
+//        System.out.println(msg);
         System.out.println(device);
         try {
             MqttClient client = new MqttClient("tcp://mqtt.senzmate.com:1883", "Donoor");
             client.connect();
 
             MqttMessage message = new MqttMessage();
-            message.setPayload(msg.getBytes());
+            message.setPayload(product.getBytes());
 
-            client.publish("SenzMate/s2A/incubator-A/"+product, message);
+            client.publish("SenzMate/s2A/incubator-A", message);
             client.disconnect();
 
         }catch (MqttException ex){

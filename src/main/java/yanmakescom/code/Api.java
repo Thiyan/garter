@@ -8,7 +8,7 @@ import yanmakescom.utils.AGResponse;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/")
+//@RequestMapping("/")
 public class Api {
     @Autowired
     private DeviceService deviceService;

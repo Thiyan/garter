@@ -54,13 +54,16 @@ public class SimpleMqttCallBack implements MqttCallback {
               else if(record[0].equals("1"))
                   d.setProduct(ProductType.R);
 
+//              System.out.println(record[1]);
             String[] rec=record[1].split(",");
 
             for (String set : rec) {
 //                System.out.println(set);
 
+
                 String[] data = set.split(":");
-                //System.out.println(data[0]);
+//                System.out.println(data[0]);
+//                System.out.println(data[1]);
 
                 switch (data[0]) {
                     case "W":
@@ -73,22 +76,22 @@ public class SimpleMqttCallBack implements MqttCallback {
 //                        T=data[1];
 //                        System.out.println(T);
                         break;
-                    case "M":
+                    case "H":
 
                         d.setHumidity(data[1]);
 //                        M=data[1];
 //                        System.out.println(H);
                         break;
-                    case "CN":
+                    case "M":
 
                         d.setMoisture(data[1]);
 //                        CN=data[1];
 //                        System.out.println(M);
                         break;
-                    case "H":
+                    case "CN":
+//                        System.out.println(data[1]);
 
-                        d.setHumidity(data[1]);
-//                        System.out.println(I);
+                        d.setConnectivity(data[1]);
                         break;
 
                         case "LI":
@@ -121,7 +124,7 @@ public class SimpleMqttCallBack implements MqttCallback {
         //client=new MqttClient("tcp://localhost:1883", "Thiyan");
         client = new MqttClient("tcp://mqtt.senzmate.com:1883", "atno14");
         client.connect();
-        client.subscribe("SenzMate/D2S/Bmich-A");
+        client.subscribe("SenzMate/D2S/incubator-A");
 
         client.setCallback(this);
     }
